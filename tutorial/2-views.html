@@ -26,15 +26,22 @@ var Comment = Backbone.Model.extend({
   initialize: function(message) {
     /* Set the initial values for `votes` to 0 and `message` to the message.
      * Remember to use setters when working with attributes! */
+     this.set('votes',0);
+     this.set('message',message);
   },
   votes: function() {
     /* Return the votes attribute on this model.
      * Remember to use a getter when working with attributes! */
+     return this.get('votes');
   },
   upvote: function(){
     // Set the `votes` attribute to the current vote count plus one.
-  }
+    this.set('votes', this.get('votes') + 1);
+  },
   // Add a downvote function; don't forget the comma above.
+  downvote: function(){
+    this.set('votes', this.get('votes') - 1);
+  }
 });
 
 /* - Backbone VIEW ------------------------------------------------------------
@@ -46,6 +53,7 @@ var Comment = Backbone.Model.extend({
  * For example, you would re-draw a comment on the page if
  * the comment model changes.  Lets dive into how to make that happen.
  */
+
 
 // Views are created by extending the Backbone.View, just like models:
 var CommentView = Backbone.View.extend({
@@ -106,6 +114,9 @@ var CommentView = Backbone.View.extend({
      * using `this.$el`.
      *
      * Rendering now becomes as simple as setting the $el's html: */
+     // html = "<div><span>blah</span><span>another blah</span></br></div>"
+
+     console.log(this.$el.html(html));
     return this.$el.html(html);
 
     /* We're also returning the $el. It's already been modified and updated,
@@ -150,13 +161,17 @@ var commentView = new CommentView({ model: comment });
 /* play with this in your console as well.
  * You can modify the comment object in the same way we just did:
  * ```
- * comment.upvote();
- * comment.downvote();
  * ```
  *
  * Try voting up and voting down a couple of times and
  * watch the eventlistener auto update the view.  Pretty cool, eh?
  */
+ comment.upvote();
+ comment.upvote();
+ comment.downvote();
+
+
+
     </script>
   </body>
 </html>
